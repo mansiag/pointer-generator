@@ -228,14 +228,14 @@ class Batcher(object):
       hps: hyperparameters
       single_pass: If True, run through the dataset exactly once (useful for when you want to run evaluation on the dev or test set). Otherwise generate random batches indefinitely (useful for training).
     """
-    self._data_path.value = data_path
-    self._vocab.value = vocab
-    self._hps.value = hps
-    self._single_pass.value = single_pass
+    self._data_path = data_path
+    self._vocab = vocab
+    self._hps = hps
+    self._single_pass = single_pass
 
     # Initialize a queue of Batches waiting to be used, and a queue of Examples waiting to be batched
     self._batch_queue = Queue.Queue(self.BATCH_QUEUE_MAX)
-    self._example_queue = Queue.Queue(self.BATCH_QUEUE_MAX * self._hps.batch_size)
+    self._example_queue = Queue.Queue(self.BATCH_QUEUE_MAX * self._hps.batch_size.value)
 
     # Different settings depending on whether we're in single_pass mode or not
     if single_pass:
